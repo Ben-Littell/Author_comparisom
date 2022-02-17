@@ -56,4 +56,10 @@ def open_file(filename):
     return mean_sen_par, std_sen_par, words_par_mean, words_par_std, mean_word_sen, std_words_sen
 
 
-mean_sen_par, std_sen_par, words_par_mean, words_par_std, mean_word_sen, std_words_sen = open_file('scarlet_letter.txt')
+smean_sen_par, sstd_sen_par, swords_par_mean, swords_par_std, smean_word_sen, sstd_words_sen = \
+    open_file('scarlet_letter.txt')
+gmean_sen_par, gstd_sen_par, gwords_par_mean, gwords_par_std, gmean_word_sen, gstd_words_sen = \
+    open_file('Great_expectations.txt')
+print(smean_sen_par, sstd_sen_par, swords_par_mean, swords_par_std, smean_word_sen, sstd_words_sen, sep='\n')
+print()
+print(gmean_sen_par, gstd_sen_par, gwords_par_mean, gwords_par_std, gmean_word_sen, gstd_words_sen, sep='\n')
