@@ -3,31 +3,56 @@ import math
 import matplotlib.pyplot as plt
 
 
-def gaussian_calculation(mean, standard_dev, variance):
-    y_list = []
-    x_list = []
-    x_start = mean - 1.5 * standard_dev
-    delta_x = (3 * standard_dev) / 100
-    m_s = mean - standard_dev
-    mps = mean + standard_dev
+def graph_gaussian(mean1, mean2, SD1, SD2, variance1, variance2):
+    y_list1 = []
+    x_list1 = []
+    y_list2 = []
+    x_list2 = []
+    x_start1 = mean1 - 1.5 * SD1
+    delta_x1 = (3 * SD1) / 100
+    m_s1 = mean1 - SD1
+    mps1 = mean1 + SD1
+    x_start2 = mean1 - 1.5 * SD2
+    delta_x2 = (3 * SD2) / 100
+    m_s2 = mean2 - SD2
+    mps2 = mean2 + SD2
+
+    # COMPUTE FOR FILE 1
     for i in range(100):
-        x = i * delta_x + x_start
-        y = (1 / (standard_dev * math.sqrt(2 * math.pi))) * math.e ** - (((x - mean) ** 2) / (2 * variance))
-        y_list.append(y)
-        x_list.append(x)
+        x = i * delta_x1 + x_start1
+        y = (1 / (SD1 * math.sqrt(2 * math.pi))) * math.e ** - (((x - mean1) ** 2) / (2 * variance1))
+        y_list1.append(y)
+        x_list1.append(x)
+        y_left = (1 / (SD1 * math.sqrt(2 * math.pi))) * math.e ** - (((m_s1 - mean1) ** 2) / (2 * variance1))
+        Left1 = y_left
+        y_right = (1 / (SD1 * math.sqrt(2 * math.pi))) * math.e ** - (((mps1 - mean1) ** 2) / (2 * variance1))
+        Right1 = y_right
 
-        y_left = (1 / (standard_dev * math.sqrt(2 * math.pi))) * math.e ** - (((m_s - mean) ** 2) / (2 * variance))
-        Left = y_left
+    apex1 = max(y_list1)
+    plt.plot(x_list1, y_list1, '-b')
+    plt.plot([mean1, mean1], [0, apex1], '-c')
+    plt.plot([mean1 - SD1, mean1 - SD1], [0, Left1], '-c')
+    plt.plot([mean1 + SD1, mean1 + SD1], [0, Right1], '-c')
 
-        y_right = (1 / (standard_dev * math.sqrt(2 * math.pi))) * math.e ** - (((mps - mean) ** 2) / (2 * variance))
-        Right = y_right
 
-    plt.axis([mean - (1.5 * standard_dev), mean + (1.5 * standard_dev), min(y_list), max(y_list)])
-    apex = max(y_list)
-    plt.plot(x_list, y_list, '-b')
-    plt.plot([mean, mean], [0, apex], '-r')
-    plt.plot([mean - standard_dev, mean - standard_dev], [0, Left], '-r')
-    plt.plot([mean + standard_dev, mean + standard_dev], [0, Right], '-r')
+    # COMPUTE FOR FILE 2
+    for i in range(100):
+        x = i * delta_x2 + x_start2
+        y = (1 / (SD2 * math.sqrt(2 * math.pi))) * math.e ** - (((x - mean2) ** 2) / (2 * variance2))
+        y_list2.append(y)
+        x_list2.append(x)
+        y_left = (1 / (SD2 * math.sqrt(2 * math.pi))) * math.e ** - (((m_s2 - mean2) ** 2) / (2 * variance2))
+        Left2 = y_left
+        y_right = (1 / (SD2 * math.sqrt(2 * math.pi))) * math.e ** - (((mps2 - mean2) ** 2) / (2 * variance2))
+        Right2 = y_right
+
+    apex2 = max(y_list2)
+    plt.plot(x_list2, y_list2, '-k')
+    plt.plot([mean2, mean2], [0, apex2], '-r')
+    plt.plot([mean2 - SD2, mean2 - SD2], [0, Left2], '-r')
+    plt.plot([mean2 + SD2, mean2 + SD2], [0, Right2], '-r')
+
+    plt.legend(['Great Expectations', 'Scarlet Letter'], loc='upper right')
     plt.show()
 
 
@@ -86,13 +111,13 @@ def open_file(filename):
 
 
 scar_sen_list, scar_par_len, scar_word_sen = open_file('scarlet_letter.txt')
-great_sen_list,  gwords_par_mean, gwords_par_std, gmean_word_sen, gstd_words_sen = \
-    open_file('Great_expectations.txt')
+great_sen_list,  great_par_len, great_word_sen = open_file('Great_expectations.txt')
 
 
-print(smean_sen_par, sstd_sen_par, swords_par_mean, swords_par_std, smean_word_sen, sstd_words_sen, sep='\n')
-print()
-print(gmean_sen_par, gstd_sen_par, gwords_par_mean, gwords_par_std, gmean_word_sen, gstd_words_sen, sep='\n')
-
-
+graph_gaussian(stats.mean(scar_sen_list), stats.mean(great_sen_list), stats.stdev(scar_sen_list),
+               stats.stdev(great_sen_list), stats.variance(scar_sen_list), stats.variance(great_sen_list))
+graph_gaussian(stats.mean(scar_par_len), stats.mean(great_par_len), stats.stdev(scar_par_len),
+               stats.stdev(great_par_len), stats.variance(scar_par_len), stats.variance(great_par_len))
+graph_gaussian(stats.mean(scar_word_sen), stats.mean(great_word_sen), stats.stdev(scar_word_sen),
+               stats.stdev(great_word_sen), stats.variance(scar_word_sen), stats.variance(great_word_sen))
 
