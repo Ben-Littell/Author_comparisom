@@ -64,7 +64,7 @@ def open_file(filename):
     sentence_counter = 0
     new_str = ''
     end_sentence = ['.', '!', '?']
-    with open(filename) as file:
+    with open(filename, encoding='UTF-8') as file:
         text = file.read()
         chapter_list = text.split('Chapter ')
         chapter_list.pop(0)
@@ -72,15 +72,21 @@ def open_file(filename):
         punc_list = ['.', '!', '?', ':']
         w_counter = 0
         word_sen = []
+        coma_para = []
+        coma_counter = 0
         for val in text1_s:
             w_counter += 1
             for char in val:
                 if char in punc_list:
                     word_sen.append(w_counter)
                     w_counter = 0
-        # mean_word_sen = stats.mean(word_sen)
-        # std_words_sen = stats.mean(word_sen)
-    with open(filename) as file:
+        # for chapter in chapter_list:
+        #     coma_counter = 0
+        #     for char in chapter:
+        #         if char == ',':
+        #             coma_counter += 1
+        #     coma_para.append(coma_counter)
+    with open(filename, encoding='UTF-8') as file:
         text2 = file.readlines()
         for line in text2:
             row = line.split()
@@ -102,22 +108,37 @@ def open_file(filename):
             s_item = item.split()
             if len(s_item) > 0:
                 par_len_list.append(len(s_item))
+        for paragraph in paragraph_list:
+            coma_counter = 0
+            if len(paragraph) > 0:
+                for char in paragraph:
+                    if char == ',':
+                        coma_counter += 1
+                        coma_para.append(coma_counter)
 
         # mean_sen_par = stats.mean(sentence_list)
         # std_sen_par = stats.stdev(sentence_list)
         # words_par_mean = stats.mean(par_len_list)
         # words_par_std = stats.stdev(par_len_list)
-    return sentence_list, par_len_list, word_sen
+    return sentence_list, par_len_list, word_sen, coma_para
 
 
-scar_sen_list, scar_par_len, scar_word_sen = open_file('scarlet_letter.txt')
-great_sen_list,  great_par_len, great_word_sen = open_file('Great_expectations.txt')
+def probability():
+    pass
 
 
-graph_gaussian(stats.mean(scar_sen_list), stats.mean(great_sen_list), stats.stdev(scar_sen_list),
-               stats.stdev(great_sen_list), stats.variance(scar_sen_list), stats.variance(great_sen_list))
-graph_gaussian(stats.mean(scar_par_len), stats.mean(great_par_len), stats.stdev(scar_par_len),
-               stats.stdev(great_par_len), stats.variance(scar_par_len), stats.variance(great_par_len))
-graph_gaussian(stats.mean(scar_word_sen), stats.mean(great_word_sen), stats.stdev(scar_word_sen),
-               stats.stdev(great_word_sen), stats.variance(scar_word_sen), stats.variance(great_word_sen))
+scar_sen_list, scar_par_len, scar_word_sen, scar_coma_para = open_file('scarlet_letter.txt')
+great_sen_list,  great_par_len, great_word_sen, great_coma_para = open_file('Great_expectations.txt')
+# print(scar_coma_para)
 
+# graph_gaussian(stats.mean(scar_sen_list), stats.mean(great_sen_list), stats.stdev(scar_sen_list),
+#                stats.stdev(great_sen_list), stats.variance(scar_sen_list), stats.variance(great_sen_list))
+#
+# graph_gaussian(stats.mean(scar_par_len), stats.mean(great_par_len), stats.stdev(scar_par_len),
+#                stats.stdev(great_par_len), stats.variance(scar_par_len), stats.variance(great_par_len))
+#
+# graph_gaussian(stats.mean(scar_word_sen), stats.mean(great_word_sen), stats.stdev(scar_word_sen),
+#                stats.stdev(great_word_sen), stats.variance(scar_word_sen), stats.variance(great_word_sen))
+
+# graph_gaussian(stats.mean(scar_coma_para), stats.mean(great_coma_para), stats.stdev(scar_coma_para),
+#                stats.stdev(great_coma_para), stats.variance(scar_coma_para), stats.variance(great_coma_para))
