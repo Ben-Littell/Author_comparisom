@@ -123,9 +123,22 @@ def open_file(filename):
     return sentence_list, par_len_list, word_sen, coma_para
 
 
-def probability():
-    pass
+def feat_probability(mean, std, mean2):
+    probability = (math.e ** (-(1/2) * ((mean2 - mean) / std) ** 2)) / (((2 * math.pi) ** 1 / 2) * std)
+    return probability
 
+
+def calculate_unkown(prior, feat_values, posterior):
+
+    for nf in range(2):
+        posterior[0] = (prior[0] * feat_values[nf][0]) / (prior[0] * feat_values[nf][0] + prior[1] * feat_values[nf][1])
+
+        posterior[1] = (prior[1] * feat_values[nf][1]) / (prior[0] * feat_values[nf][0] + prior[1] * feat_values[nf][1])
+
+        prior[0] = posterior[0]
+        prior[1] = posterior[1]
+
+    return(prior)
 
 scar_sen_list, scar_par_len, scar_word_sen, scar_coma_para = open_file('scarlet_letter.txt')
 great_sen_list,  great_par_len, great_word_sen, great_coma_para = open_file('Great_expectations.txt')
