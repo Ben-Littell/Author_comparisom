@@ -138,8 +138,10 @@ def calculate_unkown(prior, feat_values, posterior):
         prior[0] = posterior[0]
         prior[1] = posterior[1]
 
-    return(prior)
+    return prior
 
+
+prior1 = [50, 50]
 scar_sen_list, scar_par_len, scar_word_sen, scar_coma_para = open_file('scarlet_letter.txt')
 great_sen_list,  great_par_len, great_word_sen, great_coma_para = open_file('Great_expectations.txt')
 # print(scar_coma_para)
@@ -155,3 +157,7 @@ great_sen_list,  great_par_len, great_word_sen, great_coma_para = open_file('Gre
 
 # graph_gaussian(stats.mean(scar_coma_para), stats.mean(great_coma_para), stats.stdev(scar_coma_para),
 #                stats.stdev(great_coma_para), stats.variance(scar_coma_para), stats.variance(great_coma_para))
+
+
+
+
