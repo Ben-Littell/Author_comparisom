@@ -57,8 +57,39 @@ def jaccard_distance(set1, set2, word_len):
             new_set2.add(word)
     union = new_set1.union(new_set2)
     intersection = new_set1.intersection(new_set2)
-    distance = len(intersection)/len(union)
+    distance = 1 - len(intersection)/len(union)
     return distance
+
+
+def weighted_distance(dict1, dict2, word_len):
+    new_set1 = set()
+    new_set2 = set()
+    min_list = []
+    max_list = []
+    for word in dict1:
+        if len(word) == word_len:
+            new_set1.add(word)
+    for word in dict2:
+        if len(word) == word_len:
+            new_set2.add(word)
+
+    new_list1 = list(new_set1)
+    new_list2 = list(new_set2)
+    union_set = new_set1.union(new_set2)
+
+    for word in union_set:
+        main_count = new_list1.count(word)
+        novel_count = new_list2.count(word)
+        if main_count >= novel_count:
+            max_list.append(main_count)
+            min_list.append(novel_count)
+        else:
+            max_list.append(novel_count)
+            min_list.append(main_count)
+
+    weighted_distance = 1 - (sum(min_list) / sum(max_list))
+
+    print(weighted_distance)
 
 
 scar = open_file('scarlet_letter.txt')
@@ -80,7 +111,7 @@ for key in novel2:
     novel2_set.add(key)
 
 ########################################################################################################################
-# Scar and Novel1
+# Scar and Novel1 Hawthorne/Dickens
 scar_novel1_5 = jaccard_distance(scar_set, novel1_set, 5)
 scar_novel1_6 = jaccard_distance(scar_set, novel1_set, 6)
 scar_novel1_7 = jaccard_distance(scar_set, novel1_set, 7)
@@ -88,7 +119,7 @@ scar_novel1_8 = jaccard_distance(scar_set, novel1_set, 8)
 scar_novel1_9 = jaccard_distance(scar_set, novel1_set, 9)
 scar_novel1_10 = jaccard_distance(scar_set, novel1_set, 10)
 ########################################################################################################################
-# Great and Novel1
+# Great and Novel1 Dickens/Dickens
 great_novel1_5 = jaccard_distance(great_set, novel1_set, 5)
 great_novel1_6 = jaccard_distance(great_set, novel1_set, 6)
 great_novel1_7 = jaccard_distance(great_set, novel1_set, 7)
@@ -96,7 +127,7 @@ great_novel1_8 = jaccard_distance(great_set, novel1_set, 8)
 great_novel1_9 = jaccard_distance(great_set, novel1_set, 9)
 great_novel1_10 = jaccard_distance(great_set, novel1_set, 10)
 ########################################################################################################################
-# Scar and Novel2
+# Scar and Novel2 Hawthorne/ Hawthorne
 scar_novel2_5 = jaccard_distance(scar_set, novel2_set, 5)
 scar_novel2_6 = jaccard_distance(scar_set, novel2_set, 6)
 scar_novel2_7 = jaccard_distance(scar_set, novel2_set, 7)
@@ -113,6 +144,19 @@ great_novel2_9 = jaccard_distance(great_set, novel2_set, 9)
 great_novel2_10 = jaccard_distance(great_set, novel2_set, 10)
 ########################################################################################################################
 
+print(great_novel2_5)
+print(great_novel2_6)
+print(great_novel2_7)
+print(great_novel2_8)
+print(great_novel2_9)
+print(great_novel2_10)
+print()
+print(scar_novel2_5)
+print(scar_novel2_6)
+print(scar_novel2_7)
+print(scar_novel2_8)
+print(scar_novel2_9)
+print(scar_novel2_10)
 
 
 
