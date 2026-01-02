@@ -1,0 +1,1 @@
+The project was done to be able to tell the difference between authors by analyzing their writting styles. The code then will determine if the two texts being analyzed are written by the same author or not. The project works better when there is larger amounts of source data on the authors being analyzed. 
